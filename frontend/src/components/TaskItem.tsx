@@ -1,6 +1,17 @@
+// TaskItem.tsx
 import React from 'react';
 
-const TaskItem = ({ task, onDelete }) => {
+interface Task {
+  id: string;
+  name: string;
+}
+
+interface TaskItemProps {
+  task: Task;
+  onDelete: (taskId: string) => void;
+}
+
+const TaskItem: React.FC<TaskItemProps> = ({ task, onDelete }) => {
   const handleDelete = async () => {
     try {
       const response = await fetch(`https://taskmanager-mern-app-backend.onrender.com/api/tasks/${task.id}`, {

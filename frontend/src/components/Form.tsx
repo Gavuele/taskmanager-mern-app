@@ -1,13 +1,23 @@
-import React, { useState } from 'react';
+// Form.tsx
+import React, { useState, ChangeEvent, FormEvent } from 'react';
 
-const Form = ({ onTaskAdded }) => {
+interface FormProps {
+  onTaskAdded: (task: Task) => void;
+}
+
+interface Task {
+  id?: string;
+  name: string;
+}
+
+const Form: React.FC<FormProps> = ({ onTaskAdded }) => {
   const [taskName, setTaskName] = useState('');
 
-  const handleSubmit = async (event) => {
+  const handleSubmit = async (event: FormEvent) => {
     event.preventDefault();
     if (!taskName) return;
 
-    const newTask = { name: taskName };
+    const newTask: Task = { name: taskName };
 
     try {
       const response = await fetch('https://taskmanager-mern-app-backend.onrender.com/api/tasks/createtask', {
@@ -22,7 +32,7 @@ const Form = ({ onTaskAdded }) => {
         throw new Error('Error creating task');
       }
 
-      const createdTask = await response.json();
+      const createdTask: Task = await response.json();
       onTaskAdded(createdTask);
       setTaskName('');
     } catch (error) {
@@ -39,7 +49,7 @@ const Form = ({ onTaskAdded }) => {
           name="name"
           className="h-16 text-2xl border-2 hover:border-sky-600 border-sky-300 w-[35vw] sm:w-[30vw]"
           value={taskName}
-          onChange={(e) => setTaskName(e.target.value)}
+          onChange={(e: ChangeEvent<HTMLInputElement>) => setTaskName(e.target.value)}
         />
         <button
           type="submit"

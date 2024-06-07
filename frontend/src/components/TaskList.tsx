@@ -1,9 +1,15 @@
+// TaskList.tsx
 import React, { useEffect, useState } from 'react';
 import TaskItem from './TaskItem';
 import Form from './Form';
 
-const TaskList = () => {
-  const [tasks, setTasks] = useState([]);
+interface Task {
+  id: string;
+  name: string;
+}
+
+const TaskList: React.FC = () => {
+  const [tasks, setTasks] = useState<Task[]>([]);
 
   const fetchTasks = async () => {
     try {
@@ -11,7 +17,7 @@ const TaskList = () => {
       if (!response.ok) {
         throw new Error(`HTTP error! status: ${response.status}`);
       }
-      const data = await response.json();
+      const data: Task[] = await response.json();
       setTasks(data);
     } catch (error) {
       console.error('Error fetching tasks:', error);
@@ -22,11 +28,11 @@ const TaskList = () => {
     fetchTasks();
   }, []);
 
-  const handleTaskAdded = (newTask) => {
-    setTasks((prevTasks) => [...prevTasks, newTask]);
+  const handleTaskAdded = (task: Task) => {
+    setTasks((prevTasks) => [...prevTasks, task]);
   };
 
-  const handleTaskDeleted = (taskId) => {
+  const handleTaskDeleted = (taskId: string) => {
     setTasks((prevTasks) => prevTasks.filter(task => task.id !== taskId));
   };
 
