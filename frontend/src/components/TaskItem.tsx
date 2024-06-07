@@ -3,7 +3,7 @@ import React from 'react';
 const TaskItem = ({ task, onDelete }) => {
   const handleDelete = async () => {
     try {
-      const response = await fetch(`http://localhost:5000/api/tasks/${task.id}`, {
+      const response = await fetch(`https://taskmanager-mern-app-backend.onrender.com/api/tasks/${task.id}`, {
         method: 'DELETE',
       });
 

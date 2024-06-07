@@ -10,7 +10,7 @@ const Form = ({ onTaskAdded }) => {
     const newTask = { name: taskName };
 
     try {
-      const response = await fetch('http://localhost:5000/api/tasks/createtask', {
+      const response = await fetch('https://taskmanager-mern-app-backend.onrender.com/api/tasks/createtask', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
